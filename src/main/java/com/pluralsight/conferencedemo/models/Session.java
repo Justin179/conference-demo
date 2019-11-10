@@ -1,9 +1,12 @@
 package com.pluralsight.conferencedemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name="sessions")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Session {
 
     // 跟column長一樣，jpa會自動mapping
@@ -13,6 +16,14 @@ public class Session {
     private String session_name;
     private String session_description;
     private Integer session_length;
+
+    public List<Speaker> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<Speaker> speakers) {
+        this.speakers = speakers;
+    }
 
     @ManyToMany
     @JoinTable(name="session_speakers",
